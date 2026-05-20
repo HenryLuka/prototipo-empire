@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empire Premium | Portal de Classificados Exclusivos</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Descubra a melhor plataforma premium de classificados de acompanhantes no Brasil. Perfis 100% verificados em tempo real, chat interno seguro e design exclusivo.">
+    <meta name="robots" content="index, follow">
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="modal-open"> <!-- Start with modal-open to lock background under disclaimer -->
+
+    <!-- ==========================================================================
+       1. AGE DISCLAIMER OVERLAY (18+)
+       ========================================================================== -->
+    <div id="disclaimer-screen" class="disclaimer-overlay">
+        <div class="disclaimer-card">
+            <div class="disclaimer-logo">
+                EMPIRE<span>PREMIUM</span>
+            </div>
+            <h2>AVISO DE MAIORIDADE (18+)</h2>
+            <p>
+                Este site contém materiais sexualmente explícitos e é destinado exclusivamente a adultos. Ao entrar, você confirma que tem pelo menos 18 anos de idade e consente em visualizar conteúdo adulto.
+            </p>
+            <div class="disclaimer-btn-group">
+                <button id="btn-accept-age" class="btn-disclaimer-yes">Sim, sou maior de 18</button>
+                <button id="btn-reject-age" class="btn-disclaimer-no">Sair</button>
+            </div>
+            <div class="disclaimer-footer">
+                Empire Premium respeita a privacidade de seus usuários e as diretrizes de segurança digital.
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       2. MAIN APP SHELL
+       ========================================================================== -->
+    <div id="main-app">
+        <!-- Sticky Premium Header -->
+        <header class="header" id="app-header">
+            <div class="logo">
+                EMPIRE<span>PREMIUM</span>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="city-selector" id="city-btn">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span id="current-city-label">São Paulo, SP</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                
+                <button class="btn-nav-advertise" id="btn-open-stepper">
+                    <i class="fa-solid fa-fire"></i>
+                    <span>Anunciar Anúncio</span>
+                </button>
+                
+                <button class="btn-nav-chat" id="btn-toggle-global-chat" title="Mensagens Seguras">
+                    <i class="fa-solid fa-comments"></i>
+                    <span class="chat-badge"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Sub-nav States -->
+        <div class="states-sub-nav">
+            <div class="states-scroll-container">
+                <a href="#" class="state-link active">SP</a>
+                <a href="#" class="state-link">RJ</a>
+                <a href="#" class="state-link">MG</a>
+                <a href="#" class="state-link">RS</a>
+                <a href="#" class="state-link">SC</a>
+                <a href="#" class="state-link">PR</a>
+                <a href="#" class="state-link">BA</a>
+                <a href="#" class="state-link">CE</a>
+                <a href="#" class="state-link">DF</a>
+                <a href="#" class="state-link">GO</a>
+                <a href="#" class="state-link">PE</a>
+                <a href="#" class="state-link">ES</a>
+                <a href="#" class="state-link">MT</a>
+                <a href="#" class="state-link">MS</a>
+            </div>
+        </div>
+
+        <!-- Container Grid -->
+        <main class="app-container">
+            <!-- Sidebar: Advanced Dynamic Filters -->
+            <aside class="sidebar-filters" id="sidebar-filters">
+                <div class="filter-section-title">
+                    <span><i class="fa-solid fa-sliders"></i> Filtros Avançados</span>
+                    <button class="btn-clear-filters" id="btn-reset-filters">Limpar</button>
+                    <button class="btn-close-sidebar-mobile" id="btn-close-sidebar-mobile"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                
+                <!-- Age Range Selector (NEW) -->
+                <div class="filter-group">
+                    <label class="filter-label">Faixa Etária</label>
+                    <div class="category-pills" id="age-filter-container">
+                        <div class="category-pill active" data-age="all">Todas</div>
+                        <div class="category-pill" data-age="18-25">18-25</div>
+                        <div class="category-pill" data-age="26-35">26-35</div>
+                        <div class="category-pill" data-age="36-99">36+</div>
+                    </div>
+                </div>
+
+                <!-- Region Selector -->
+                <div class="filter-group">
+                    <label class="filter-label" for="filter-neighborhood">Zona / Bairro</label>
+                    <select class="filter-select" id="filter-neighborhood">
+                        <option value="all">Todas as Zonas</option>
+                        <option value="zona-sul">Zona Sul</option>
+                        <option value="zona-oeste">Zona Oeste</option>
+                        <option value="centro">Centro</option>
+                        <option value="zona-norte">Zona Norte</option>
+                        <option value="zona-leste">Zona Leste</option>
+                    </select>
+                </div>
+
+                <!-- Price Slider -->
+                <div class="filter-group">
+                    <label class="filter-label">Valor Máximo (Hora)</label>
+                    <div class="range-container">
+                        <div class="range-values">
+                            <span>R$ 150</span>
+                            <span id="price-max-display">R$ 600</span>
+                        </div>
+                        <input type="range" class="range-slider" id="filter-price" min="150" max="600" step="50" value="600">
+                    </div>
+                </div>
+
+                <!-- Physical Attributes -->
+                <div class="filter-group">
+                    <label class="filter-label" for="filter-hair">Cor do Cabelo</label>
+                    <select class="filter-select" id="filter-hair">
+                        <option value="all">Qualquer Cabelo</option>
+                        <option value="loiro">Loiro</option>
+                        <option value="moreno">Moreno</option>
+                        <option value="ruivo">Ruivo</option>
+                        <option value="castanho">Castanho</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="filter-body">Tipo de Corpo</label>
+                    <select class="filter-select" id="filter-body">
+                        <option value="all">Qualquer Corpo</option>
+                        <option value="delgada">Delgada / Magra</option>
+                        <option value="atletica">Atlética</option>
+                        <option value="curvilinea">Curvilínea / Violão</option>
+                    </select>
+                </div>
+
+                <!-- Verified Only Toggle -->
+                <div class="filter-group">
+                    <div class="switch-container">
+                        <span class="switch-label"><i class="fa-solid fa-circle-check" style="color: var(--accent-green)"></i> Apenas Perfis Verificados</span>
+                        <label class="switch">
+                            <input type="checkbox" id="filter-verified">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Premium Only Toggle -->
+                <div class="filter-group">
+                    <div class="switch-container">
+                        <span class="switch-label"><i class="fa-solid fa-crown" style="color: var(--accent-gold)"></i> Apenas Destaques VIP</span>
+                        <label class="switch">
+                            <input type="checkbox" id="filter-vip">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <section class="main-content">
+                <div class="mobile-sidebar-toggle">
+                    <button id="btn-open-sidebar" class="btn-open-sidebar"><i class="fa-solid fa-sliders"></i> Filtros Avançados</button>
+                </div>
+                
+                <!-- Search bar & Quick actions -->
+                <div class="search-header-box advanced-search-box">
+                    <div class="search-input-wrapper custom-select-wrapper">
+                        <i class="fa-solid fa-venus-mars"></i>
+                        <select class="search-field select-field" id="search-category">
+                            <option value="all">Todas Categorias</option>
+                            <option value="acompanhante">Feminino</option>
+                            <option value="transex">Transex</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="massagem">Massagens</option>
+                        </select>
+                    </div>
+                    <div class="search-input-wrapper custom-select-wrapper">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <select class="search-field select-field" id="search-state">
+                            <option value="all">Todo Brasil</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                        </select>
+                    </div>
+                    <div class="search-input-wrapper input-text-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" class="search-field" id="search-query" placeholder="Buscar por nome, serviços...">
+                    </div>
+                </div>
+
+                <!-- Horizontal Category Tabs -->
+                <div class="category-tabs-container" id="category-tabs-container">
+                    <button class="category-tab active" data-category="all">Todas <span class="tab-badge" id="badge-all">0</span></button>
+                    <button class="category-tab" data-category="acompanhante">Feminino <span class="tab-badge" id="badge-acompanhante">0</span></button>
+                    <button class="category-tab" data-category="transex">Transex <span class="tab-badge" id="badge-transex">0</span></button>
+                    <button class="category-tab" data-category="masculino">Masculino <span class="tab-badge" id="badge-masculino">0</span></button>
+                    <button class="category-tab" data-category="massagem">Massagens <span class="tab-badge" id="badge-massagem">0</span></button>
+                    <button class="category-tab" data-category="encontros">Encontros <span class="tab-badge" id="badge-encontros">0</span></button>
+                </div>
+
+                <!-- Em Alta Carousel -->
+                <div id="section-em-alta" class="em-alta-section">
+                    <h2 class="section-headline small-headline">
+                        <i class="fa-solid fa-fire"></i> Em Alta (Ao Vivo)
+                    </h2>
+                    <div class="em-alta-carousel" id="em-alta-carousel">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- 1. VIP DIAMOND GRID (Destaques da Plataforma) -->
+                <div id="section-vip-highlights">
+                    <h2 class="section-headline gold">
+                        <i class="fa-solid fa-crown"></i> Destaques Diamond VIP
+                    </h2>
+                    <div class="vip-highlights-grid" id="diamond-grid-container">
+                        <!-- Cards injected via Javascript -->
+                    </div>
+                </div>
+
+                <!-- 2. ALL LISTINGS GRID -->
+                <div>
+                    <h2 class="section-headline">
+                        <i class="fa-solid fa-star"></i> Anúncios em Destaque
+                    </h2>
+                    <div class="escorts-grid" id="general-grid-container">
+                        <!-- Cards injected via Javascript -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-container">
+                <div class="footer-col brand-col">
+                    <div class="logo">
+                        EMPIRE<span>PREMIUM</span>
+                    </div>
+                    <p>O portal de classificados mais exclusivo do Brasil. Perfis 100% verificados, chat criptografado e discrição absoluta.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Categorias</h4>
+                    <a href="#">Acompanhantes Femininas</a>
+                    <a href="#">Acompanhantes Transex</a>
+                    <a href="#">Acompanhantes Masculinos</a>
+                    <a href="#">Massagem Tântrica</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Top Estados</h4>
+                    <a href="#">São Paulo (SP)</a>
+                    <a href="#">Rio de Janeiro (RJ)</a>
+                    <a href="#">Minas Gerais (MG)</a>
+                    <a href="#">Santa Catarina (SC)</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Suporte</h4>
+                    <a href="#">Termos de Uso</a>
+                    <a href="#">Política de Privacidade</a>
+                    <a href="#">Contato / Denúncia</a>
+                    <a href="#">Dúvidas Frequentes</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Empire Premium. Todos os direitos reservados. Proibido para menores de 18 anos.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ==========================================================================
+       3. MODAL: PROFILE DETAILED VIEW
+       ========================================================================== -->
+    <div class="modal-backdrop" id="profile-detail-modal">
+        <div class="modal-content-wrapper">
+            <button class="modal-close-btn" id="btn-close-profile" title="Fechar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="profile-modal-body">
+                <!-- Left Column: Gallery & Contact -->
+                <div class="profile-left-col">
+                    <div class="profile-gallery-container">
+                        <img src="" alt="Foto Principal" class="gallery-main-img" id="profile-modal-main-img">
+                        <div class="badge-vip diamond" id="profile-modal-vip-badge" style="display: none;">DIAMOND</div>
+                    </div>
+                    
+                    <div class="gallery-thumbs-row" id="profile-modal-thumbs-row">
+                        <!-- Dynamic Thumbs injected here -->
+                    </div>
+
+                    <!-- Call To Action Panel -->
+                    <div class="profile-cta-panel">
+                        <a href="#" target="_blank" class="btn-cta-whatsapp" id="profile-modal-whatsapp-link">
+                            <i class="fa-brands fa-whatsapp"></i> WhatsApp Direto
+                        </a>
+                        <button class="btn-cta-chat" id="profile-modal-start-chat-btn">
+                            <i class="fa-solid fa-lock"></i> Chat Seguro Privado
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column: Info, Specs & Reviews -->
+                <div class="profile-right-col">
+                    <div class="profile-header-info">
+                        <div class="profile-name-row">
+                            <h1 id="profile-modal-name">Luana</h1>
+                            <span class="verified-badge" id="profile-modal-verified-badge">
+                                <span class="pulse-dot"></span> Verificado
+                            </span>
+                        </div>
+                        <div class="profile-price-banner" id="profile-modal-price">R$ 350 / hora</div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="profile-bio-box">
+                        <h3>Sobre Mim</h3>
+                        <p id="profile-modal-bio">
+                            Olá, sou a Luana, uma loira sedutora de olhos claros. Adoro realizar fantasias, sou super simpática, discreta e estilosa. Atendo em meu local privativo luxuoso na Zona Sul com total discrição e higiene. Venha desfrutar de um momento inesquecível de puro prazer.
+                        </p>
+                    </div>
+
+                    <!-- Attribute Dashboard -->
+                    <div class="profile-bio-box">
+                        <h3>Características Físicas</h3>
+                        <div class="profile-specs-grid">
+                            <div class="spec-cell">
+                                <div class="spec-cell-label">Idade</div>
+                                <div class="spec-cell-value" id="profile-modal-age">24 anos</div>
+                            </div>
+                            <div class="spec-cell">
+                                <div class="spec-cell-label">Altura</div>
+                                <div class="spec-cell-value" id="profile-modal-height">1.68 m</div>
+                            </div>
+                            <div class="spec-cell">
+                                <div class="spec-cell-label">Peso</div>
+                                <div class="spec-cell-value" id="profile-modal-weight">56 kg</div>
+                            </div>
+                            <div class="spec-cell">
+                                <div class="spec-cell-label">Cabelo</div>
+                                <div class="spec-cell-value" id="profile-modal-hair-val">Loiro</div>
+                            </div>
+                            <div class="spec-cell">
+                                <div class="spec-cell-label">Olhos</div>
+                                <div class="spec-cell-value" id="profile-modal-eyes">Castanhos</div>
+                            </div>
+                            <div class="spec-cell">
+                                <div class="spec-cell-label">Busto</div>
+                                <div class="spec-cell-value" id="profile-modal-busto">Natural</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Services Offered -->
+                    <div class="profile-bio-box">
+                        <h3>Serviços Inclusos</h3>
+                        <div class="card-info-row" id="profile-modal-services-row">
+                            <!-- Dynamic Tags -->
+                        </div>
+                    </div>
+
+                    <!-- Reviews & Comments Section -->
+                    <div class="profile-reviews-section">
+                        <div class="reviews-header">
+                            <h2>Avaliações Recentes (<span id="profile-modal-reviews-count">3</span>)</h2>
+                            <div class="review-stars" id="profile-modal-stars-rating">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <span>(5.0)</span>
+                            </div>
+                        </div>
+
+                        <!-- Comments List -->
+                        <div class="review-card-list" id="profile-modal-comments-container">
+                            <!-- Injected comments -->
+                        </div>
+
+                        <!-- Add Review Form -->
+                        <form class="review-form" id="add-review-form">
+                            <h3>Deixe sua Avaliação</h3>
+                            <div class="review-form-inputs">
+                                <input type="text" class="review-form-input" id="review-author-input" placeholder="Seu apelido/nome..." required>
+                                <select class="review-form-input" id="review-stars-input" required>
+                                    <option value="5">★★★★★ (5 Estrelas)</option>
+                                    <option value="4">★★★★☆ (4 Estrelas)</option>
+                                    <option value="3">★★★☆☆ (3 Estrelas)</option>
+                                </select>
+                            </div>
+                            <textarea class="review-form-textarea" id="review-text-input" placeholder="Conte como foi sua experiência com a profissional... (Discreto e respeitoso)" required></textarea>
+                            <button type="submit" class="btn-submit-review">Enviar Avaliação com Confirmação</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       4. SECURE INTERN CHAT DRAWER
+       ========================================================================== -->
+    <div class="chat-drawer" id="secure-chat-drawer">
+        <div class="chat-header">
+            <div class="chat-header-user">
+                <img src="" alt="Avatar" class="chat-header-avatar" id="chat-escort-avatar">
+                <div class="chat-header-info">
+                    <span class="chat-header-name" id="chat-escort-name">Luana</span>
+                    <span class="chat-header-status"><span class="pulse-dot"></span> Online</span>
+                </div>
+            </div>
+            
+            <div class="chat-header-actions">
+                <button class="chat-close-btn" id="btn-close-chat" title="Fechar Chat">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat messages container -->
+        <div class="chat-body" id="chat-messages-container">
+            <div class="chat-warning-box">
+                <i class="fa-solid fa-shield-halved"></i> 
+                <strong>Chat Criptografado & Seguro:</strong> Empire Premium monitora o chat para prevenir fraudes. Nenhum dado pessoal é exposto imediatamente. Combine o serviço com segurança.
+            </div>
+            
+            <!-- Message bubbles go here -->
+            
+            <!-- Typing Indicator Bubble -->
+            <div class="chat-typing-bubble" id="chat-typing-indicator">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+            </div>
+        </div>
+
+        <!-- Chat Input Footer -->
+        <div class="chat-footer">
+            <input type="text" class="chat-input-field" id="chat-input-text" placeholder="Envie uma mensagem criptografada...">
+            <button class="chat-send-btn" id="btn-send-chat-msg" title="Enviar">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       5. ADVERTISER CREATION FLOW & STEPPER
+       ========================================================================== -->
+    <div class="modal-backdrop" id="advertiser-stepper-modal">
+        <div class="modal-content-wrapper" style="max-width: 800px;">
+            <button class="modal-close-btn" id="btn-close-stepper" title="Fechar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Stepper Title -->
+            <div class="panel-header" id="stepper-normal-header">
+                <h1>Cadastrar e Impulsionar seu Anúncio</h1>
+                <p>Crie um anúncio de destaque com verificação facial e alcance 10x mais clientes!</p>
+            </div>
+
+            <!-- Stepper Progress Indicators -->
+            <div class="advertiser-stepper-body" id="stepper-content-box">
+                <nav class="stepper-nav">
+                    <div class="stepper-progress-bar" id="stepper-line-progress"></div>
+                    <div class="stepper-step active" data-step="1">
+                        <div class="step-num">1</div>
+                        <span class="step-title">Informações</span>
+                    </div>
+                    <div class="stepper-step" data-step="2">
+                        <div class="step-num">2</div>
+                        <span class="step-title">Verificação</span>
+                    </div>
+                    <div class="stepper-step" data-step="3">
+                        <div class="step-num">3</div>
+                        <span class="step-title">Impulsionamento</span>
+                    </div>
+                </nav>
+
+                <!-- STEP 1: Basic Ad details -->
+                <div class="stepper-view active" id="step-view-1">
+                    <div class="stepper-grid-form">
+                        <div class="form-item">
+                            <label for="ad-name">Nome Artístico</label>
+                            <input type="text" class="form-input-field" id="ad-name" placeholder="Ex: Isabella" required>
+                        </div>
+                        <div class="form-item">
+                            <label for="ad-category">Categoria</label>
+                            <select class="form-input-field" id="ad-category" required>
+                                <option value="acompanhante">Feminino</option>
+                                <option value="transex">Transex</option>
+                                <option value="masculino">Masculino</option>
+                                <option value="massagem">Massagens</option>
+                            </select>
+                        </div>
+                        <div class="form-item">
+                            <label for="ad-age">Idade</label>
+                            <input type="number" class="form-input-field" id="ad-age" placeholder="Ex: 22" min="18" required>
+                        </div>
+                        <div class="form-item">
+                            <label for="ad-price">Valor da Hora (R$)</label>
+                            <input type="number" class="form-input-field" id="ad-price" placeholder="Ex: 300" required>
+                        </div>
+                        <div class="form-item">
+                            <label for="ad-neighborhood">Zona / Bairro</label>
+                            <select class="form-input-field" id="ad-neighborhood" required>
+                                <option value="zona-sul">Zona Sul</option>
+                                <option value="zona-oeste">Zona Oeste</option>
+                                <option value="centro">Centro</option>
+                                <option value="zona-norte">Zona Norte</option>
+                                <option value="zona-leste">Zona Leste</option>
+                            </select>
+                        </div>
+                        <div class="form-item">
+                            <label for="ad-hair">Cor do Cabelo</label>
+                            <select class="form-input-field" id="ad-hair" required>
+                                <option value="loiro">Loiro</option>
+                                <option value="moreno">Moreno</option>
+                                <option value="ruivo">Ruivo</option>
+                                <option value="castanho">Castanho</option>
+                            </select>
+                        </div>
+                        <div class="form-item">
+                            <label for="ad-body">Tipo de Corpo</label>
+                            <select class="form-input-field" id="ad-body" required>
+                                <option value="delgada">Delgada / Magra</option>
+                                <option value="atletica">Atlética</option>
+                                <option value="curvilinea">Curvilínea</option>
+                            </select>
+                        </div>
+                        <div class="form-item">
+                            <label for="ad-whatsapp">WhatsApp (com DDD)</label>
+                            <input type="tel" class="form-input-field" id="ad-whatsapp" placeholder="Ex: 11999998888" required>
+                        </div>
+                        <div class="form-item full-width">
+                            <label for="ad-bio">Descrição do Anúncio (Diferenciais)</label>
+                            <textarea class="form-textarea-field" id="ad-bio" placeholder="Fale um pouco sobre você, seu atendimento e especialidades..." required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Real-time Camera Verification Simulation -->
+                <div class="stepper-view" id="step-view-2">
+                    <div class="verification-wizard-wrapper">
+                        <!-- Simulated Camera Viewport -->
+                        <div class="camera-preview-container" id="camera-viewport">
+                            <div class="camera-scanline"></div>
+                            <div class="camera-overlay-text">
+                                <span class="pulse-dot"></span> WEBCAM LIVE : SIMULADOR DETECTADO
+                            </div>
+                            <!-- Placeholder display -->
+                            <div class="camera-placeholder" id="camera-mock-placeholder">
+                                <i class="fa-solid fa-camera"></i>
+                                <span>Aguardando ativação da câmera...</span>
+                            </div>
+                            <!-- Captures Image container -->
+                            <img src="" alt="Selfie de Verificação" class="camera-preview-image" id="camera-mock-capture">
+                        </div>
+
+                        <!-- Instructions & Code -->
+                        <div class="verification-instructions">
+                            <h3><i class="fa-solid fa-circle-check" style="color: var(--accent-green)"></i> Selo de Perfil Verificado</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                                Para combater perfis falsos e golpes, o Empire Premium exige que você tire uma foto segurando uma folha com o código exclusivo gerado abaixo.
+                            </p>
+                            
+                            <div class="verification-code-box">
+                                <h4>Escreva este código em um papel:</h4>
+                                <div class="verification-code-num" id="auth-code-gen">EP-9852</div>
+                            </div>
+                            
+                            <button class="btn-capture-camera" id="btn-trigger-camera">
+                                <i class="fa-solid fa-camera-retro"></i> Ativar & Capturar Foto
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Boost Plans Matrix Selection -->
+                <div class="stepper-view" id="step-view-3">
+                    <div class="plans-grid">
+                        <!-- Plan Silver -->
+                        <div class="plan-card" data-plan="silver">
+                            <h3 class="plan-name">Prata VIP</h3>
+                            <div class="plan-price-row">
+                                <div class="plan-price">R$ 99<span>/mês</span></div>
+                            </div>
+                            <ul class="plan-features-list">
+                                <li><i class="fa-solid fa-check"></i> Anúncio ativo por 30 dias</li>
+                                <li><i class="fa-solid fa-check"></i> Galeria com até 5 fotos</li>
+                                <li><i class="fa-solid fa-check"></i> Selo Prata</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Plan Gold -->
+                        <div class="plan-card active" data-plan="gold">
+                            <h3 class="plan-name" style="color: #c0c0c0;">Ouro VIP</h3>
+                            <div class="plan-price-row">
+                                <div class="plan-price">R$ 199<span>/mês</span></div>
+                            </div>
+                            <ul class="plan-features-list">
+                                <li><i class="fa-solid fa-check"></i> Anúncio acima dos Pratas</li>
+                                <li><i class="fa-solid fa-check"></i> Galeria com 8 fotos</li>
+                                <li><i class="fa-solid fa-check"></i> Selo Gold VIP Destaque</li>
+                                <li><i class="fa-solid fa-check"></i> Chat Seguro incluso</li>
+                            </ul>
+                        </div>
+
+                        <!-- Plan Diamond (Premium) -->
+                        <div class="plan-card diamond-plan" data-plan="diamond">
+                            <h3 class="plan-name diamond">Diamond VIP</h3>
+                            <div class="plan-price-row">
+                                <div class="plan-price">R$ 349<span>/mês</span></div>
+                            </div>
+                            <ul class="plan-features-list">
+                                <li><i class="fa-solid fa-check"></i> <strong>Destaque no Topo da Home</strong></li>
+                                <li><i class="fa-solid fa-check"></i> Galeria ilimitada + Vídeos</li>
+                                <li><i class="fa-solid fa-check"></i> Efeito Gold/Diamond Glow</li>
+                                <li><i class="fa-solid fa-check"></i> Suporte WhatsApp VIP 24h</li>
+                                <li><i class="fa-solid fa-check"></i> Chat Seguro & Verificação Instantânea</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer control navigation -->
+                <div class="stepper-nav-footer" id="stepper-nav-buttons">
+                    <button class="btn-stepper-back" id="btn-stepper-back" style="visibility: hidden;">Voltar</button>
+                    <button class="btn-stepper-next" id="btn-stepper-next">Avançar <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- DYNAMIC PIX CHECKOUT OVERLAY (TRIGGERED UPON FINISHING STEP 3) -->
+            <div class="pix-checkout-overlay" id="checkout-pix-screen">
+                <div class="pix-checkout-box">
+                    <h2 style="font-size: 1.4rem; font-weight: 800;"><i class="fa-solid fa-qrcode" style="color: var(--accent-magenta);"></i> Pagamento via PIX</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                        Scaneie o QR Code abaixo para liberar seu plano <span id="checkout-selected-plan-label" style="color: var(--accent-magenta); font-weight: 700;">Diamond VIP</span> instantaneamente de forma 100% automatizada.
+                    </p>
+                    
+                    <div class="pix-qr-container">
+                        <!-- MOCKED QR CODE -->
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=EmpirePremiumMockPixPaymentCode1823984712938741829" alt="PIX QR CODE" class="pix-qr-img">
+                    </div>
+                    
+                    <div style="font-family: var(--font-mono); font-size: 0.8rem; background: rgba(255, 255, 255, 0.02); padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); width: 100%;">
+                        00020126360014BR.GOV.BCB.PIX0114...
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 10px; color: var(--text-secondary); font-size: 0.8rem;">
+                        <div class="pix-loading-spinner"></div>
+                        Aguardando confirmação do banco...
+                    </div>
+                    
+                    <button class="btn-simular-pix" id="btn-simulate-pix-success">Simular Confirmação Bancária (Aprovar)</button>
+                </div>
+            </div>
+
+            <!-- SUCCESS CELEBRATION VIEW -->
+            <div class="advertiser-success-view" id="stepper-success-screen">
+                <div class="success-icon-wrapper">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: #fff;">Parabéns! Anúncio Publicado!</h2>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto;">
+                    Sua selfie de verificação foi aprovada pelo nosso sistema automatizado de IA e seu pagamento foi confirmado! Seu anúncio com selo <strong style="color: var(--accent-gold);"><i class="fa-solid fa-crown"></i> Diamond VIP</strong> já está no topo dos resultados.
+                </p>
+                <button class="btn-cta-chat" id="btn-success-go-home" style="margin-top: 15px; padding: 12px 30px; font-size: 0.95rem; border-radius: 30px;">
+                    Ver Meu Anúncio na Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Script Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
