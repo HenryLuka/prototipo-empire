@@ -226,7 +226,7 @@ img {
     display: none;
     opacity: 0;
     transition: opacity 0.5s ease;
-    padding-top: 80px; /* Space for sticky header */
+    padding-top: 0; /* Space removed per request */
 }
 
 /* Header & Navigation */
